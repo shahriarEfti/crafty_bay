@@ -45,6 +45,15 @@ class _CraftyBayAppState extends State<CraftyBayApp> {
     fontSize: 16,
 
     )),
+        ),
+
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: AppColor.themecolor,
+           textStyle: TextStyle(
+             fontSize: 16,
+           )
+          )
         )
       ),
 
