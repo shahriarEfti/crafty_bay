@@ -1,7 +1,10 @@
+import 'package:crafty_bay/presentation/ui/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay/presentation/ui/widgets/app_logo_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -57,7 +60,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         
         
         
-                  onPressed: (){}, child: Text('Next')),
+                  onPressed: _onTapNext, child: Text('Next')),
               SizedBox(height: 16,),
               RichText(text: TextSpan(
                 text: 'This code will exprire in ',
@@ -78,7 +81,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           ),
         ),
       ),
+
     );
+
+
+  }
+  void _onTapNext (){
+    Get.to(()=>const CompleteProfileScreen());
 
   }
   @override
