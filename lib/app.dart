@@ -18,6 +18,13 @@ class _CraftyBayAppState extends State<CraftyBayApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black54
+          )
+        ),
         progressIndicatorTheme: ProgressIndicatorThemeData(
           color: AppColor.themecolor,
 
