@@ -109,4 +109,3 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
 }
 
-//Complete Profile screen ta dekhar jonno otp button use korci oita pore thik korte hobe ####################################################

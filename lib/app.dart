@@ -1,4 +1,5 @@
 
+import 'package:crafty_bay/presentation/ui/screens/home_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/splash_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,9 @@ class _CraftyBayAppState extends State<CraftyBayApp> {
             fontWeight: FontWeight.w600),
         ),
         inputDecorationTheme: InputDecorationTheme(
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.w400,
+          ),
             border:_outlineinputborder(),
           enabledBorder: _outlineinputborder(),
           focusedBorder: _outlineinputborder(),
@@ -58,7 +62,7 @@ class _CraftyBayAppState extends State<CraftyBayApp> {
       ),
 
 
-      home: SplashScreen(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
 
