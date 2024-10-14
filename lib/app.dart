@@ -1,5 +1,7 @@
 
+import 'package:crafty_bay/controller_binder.dart';
 import 'package:crafty_bay/presentation/ui/screens/home_screen.dart';
+import 'package:crafty_bay/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/splash_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +71,8 @@ class _CraftyBayAppState extends State<CraftyBayApp> {
       ),
 
 
-      home: HomeScreen(),
+      home:SplashScreen(),
+      initialBinding: ControllerBinder(),
       debugShowCheckedModeBanner: false,
     );
 

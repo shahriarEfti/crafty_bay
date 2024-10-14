@@ -1,4 +1,5 @@
 
+import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets_path.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ Widget _buildCatagoriesSection() {
               SectionHeader(
                 title: 'Catagories',
                 onTap: (){
-                  Get.to(() => const CatagoryListScreen());
+                  Get.find<BottomNavBarController>().SelectCatagory();
                 },),
               const SizedBox(height: 8,),
 
