@@ -1,6 +1,8 @@
+import 'package:crafty_bay/presentation/ui/screens/review_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_banner_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 import '../widgets/color_picker.dart';
@@ -146,7 +148,9 @@ Widget _buildNameAndQuantitySection(BuildContext context) {
                                     color: Colors.black54)),
                                 const SizedBox(width: 8,),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.to(()=>ReviewScreen());
+                                  },
                                   child: const Text(
                                     'Reviews',
                                     style: TextStyle(

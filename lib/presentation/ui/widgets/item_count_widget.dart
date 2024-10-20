@@ -54,8 +54,8 @@ class _ItemCountState extends State<ItemCount> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: 32,
-          width: 32,
+          height: 28,
+          width: 28,
           decoration: BoxDecoration(
             color: AppColor.themecolor,
             border: Border.all(color: Colors.grey),
@@ -68,9 +68,9 @@ class _ItemCountState extends State<ItemCount> {
             onPressed: _decrement,
           ),
         ),
-        SizedBox(width: 8),
+        SizedBox(width: 6),
         Container(
-          width: 40,
+          width: 30,
           alignment: Alignment.center,
           child: Text(
             _currentValue.toString(),
@@ -80,10 +80,10 @@ class _ItemCountState extends State<ItemCount> {
             ),
           ),
         ),
-        SizedBox(width: 8),
+        SizedBox(width: 6),
         Container(
-          height: 32,
-          width: 32,
+          height: 28,
+          width: 28,
           decoration: BoxDecoration(
             color: AppColor.themecolor,
             border: Border.all(color: Colors.grey),
