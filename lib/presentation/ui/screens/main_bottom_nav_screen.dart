@@ -6,6 +6,12 @@ import 'package:crafty_bay/presentation/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../state_holders/catagory_list_controller.dart';
+import '../../state_holders/new_product_list_controller.dart';
+import '../../state_holders/popular_product_list_controller.dart';
+import '../../state_holders/slider_list_controller.dart';
+import '../../state_holders/special_product_list_controller.dart';
+
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
 
@@ -15,38 +21,54 @@ class MainBottomNavScreen extends StatefulWidget {
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
 
-  final BottomNavBarController _navBarController = Get.find <BottomNavBarController>();
+  final BottomNavBarController _navBarController = Get.find <
+      BottomNavBarController>();
 
-  final List<Widget> _screens=[
-    HomeScreen(),
-    CatagoryListScreen(),
-   CartScreen(),
-    WishListScreen(),
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const CatagoryListScreen(),
+    const CartScreen(),
+    const WishListScreen(),
 
 
   ];
+
   @override
-  Widget build(BuildContext context) {
-    return GetBuilder<BottomNavBarController>(
-      builder: (_) {
-        return Scaffold(
-          body: _screens
-            [_navBarController.selectedIndex]
+  void initState() {
 
-          ,
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: _navBarController.selectedIndex,
-            onDestinationSelected: _navBarController.changedIndex,
-            destinations: [
-              NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-              NavigationDestination(icon: Icon(Icons.category_outlined), label: 'Catagory'),
-              NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-              NavigationDestination(icon: Icon(Icons.favorite), label: 'WishList'),
-            ],
-          ),
-
-        );
-      }
-    );
+    super.initState();
+    Get.find<SliderListController>().getSliderList();
+    Get.find<CatagoryListController>().getCatagoryList();
+    Get.find<NewProductListController>().getNewProductList();
+    Get.find<PopularProductListController>().getPopularProductList();
+    Get.find<SpecialProductListController>().getSpecialProductList();
   }
-}
+    @override
+    Widget build(BuildContext context) {
+      return GetBuilder<BottomNavBarController>(
+          builder: (_) {
+            return Scaffold(
+              body: _screens
+              [_navBarController.selectedIndex]
+
+              ,
+              bottomNavigationBar: NavigationBar(
+                selectedIndex: _navBarController.selectedIndex,
+                onDestinationSelected: _navBarController.changedIndex,
+                destinations: [
+                  const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+                  const NavigationDestination(
+                      icon: Icon(Icons.category_outlined), label: 'Catagory'),
+                  const NavigationDestination(
+                      icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                  const NavigationDestination(
+                      icon: Icon(Icons.favorite), label: 'WishList'),
+                ],
+              ),
+
+            );
+          }
+      );
+    }
+  }
+

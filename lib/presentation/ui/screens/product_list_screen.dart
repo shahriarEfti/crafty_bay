@@ -29,7 +29,7 @@ class ProductListScreen extends StatelessWidget {
 
           itemBuilder: (context,index){
 
-             return const ProductCard();
+            // return const ProductCard();
           }),
     );
   }

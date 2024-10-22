@@ -1,11 +1,15 @@
-
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
-import 'package:crafty_bay/presentation/ui/screens/catagory_list_screen.dart';
+import 'package:crafty_bay/presentation/state_holders/new_product_list_controller.dart';
 import 'package:crafty_bay/presentation/ui/utils/assets_path.dart';
+import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../state_holders/catagory_list_controller.dart';
+import '../../state_holders/popular_product_list_controller.dart';
+import '../../state_holders/special_product_list_controller.dart';
 import '../widgets/widgets.dart';
+
 
 
 
@@ -20,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-             SearchTextField(textEditingController: TextEditingController(),),
+
+              SearchTextField(textEditingController: TextEditingController(),),
+              const HomeBannerSlider(),
               const SizedBox(height: 16,),
-              HomeBannerSlider(),
-              const SizedBox(height: 16,),
-        
+
+
               _buildCatagoriesSection(),
               _buildPopularProductSection(),
               const SizedBox(height: 16,),
@@ -41,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16,),
               _buildSpecialProductSection(),
               const SizedBox(height: 16,),
-        
+
             ],
           ),
         ),
@@ -50,55 +56,95 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-Widget _buildPopularProductSection() {
+  Widget _buildPopularProductSection() {
     return Column(
-            children: [
-              SectionHeader(
-                title: 'Popular',
-                onTap: (){},),
-              const SizedBox(height: 200,
-                  child: HorizontalProductListView(),)
-            ],
-          );
+      children: [
+        SectionHeader(
+          title: 'Popular',
+          onTap: (){},),
+        SizedBox(height: 200,
+            child: GetBuilder<PopularProductListController>(
+                builder: (popularProductListController) {
+                  return Visibility(
+                      visible: !popularProductListController.inProgress,
+                      replacement: CenteredCircularProgressIndicator(),
+
+                      child: HorizontalProductListView(
+                        productList: popularProductListController.productList,
+                      ));
+                }
+            )),
+       // const SizedBox(height: 200, child: HorizontalProductListView(),)
+      ],
+    );
   }
-Widget _buildNewProductSection() {
+  Widget _buildNewProductSection() {
     return Column(
       children: [
         SectionHeader(
           title: 'New',
           onTap: (){},),
-        const SizedBox(height: 200,
-            child: HorizontalProductListView()),
+         SizedBox(height: 200,
+            child: GetBuilder<NewProductListController>(
+              builder: (newProductListController) {
+                return Visibility(
+                  visible: !newProductListController.inProgress,
+                    replacement: CenteredCircularProgressIndicator(),
+
+                    child: HorizontalProductListView(
+                    productList: newProductListController.productList,
+                    ));
+              }
+            )),
       ],
     );
   }
-Widget _buildSpecialProductSection() {
+  Widget _buildSpecialProductSection() {
     return Column(
       children: [
         SectionHeader(
           title: 'Special',
           onTap: (){},),
-        const SizedBox(height: 200,
-            child: HorizontalProductListView()),
+
+        SizedBox(height: 200,
+            child: GetBuilder<SpecialProductListController>(
+                builder: (specialProductListController) {
+                  return Visibility(
+                      visible: !specialProductListController.inProgress,
+                      replacement: CenteredCircularProgressIndicator(),
+
+                      child: HorizontalProductListView(
+                        productList: specialProductListController.productList,
+                      ));
+                }
+            )),
+       // const SizedBox(height: 200, child: HorizontalProductListView()),
       ],
     );
   }
-Widget _buildCatagoriesSection() {
+  Widget _buildCatagoriesSection() {
     return Column(
-            children: [
-              SectionHeader(
-                title: 'Catagories',
-                onTap: (){
-                  Get.find<BottomNavBarController>().SelectCatagory();
-                },),
-              const SizedBox(height: 8,),
+      children: [
+        SectionHeader(
+          title: 'Catagories',
+          onTap: (){
+            Get.find<BottomNavBarController>().SelectCatagory();
+          },),
+        const SizedBox(height: 8,),
 
-              const SizedBox(
-                height: 120,
-                child: HorizontalCatagoryListView(),
-              ),
-            ],
-          );
+        SizedBox(
+          height: 120,
+          child: GetBuilder<CatagoryListController>(
+              builder: (catagoryListController) {
+                return Visibility(
+                    visible: !catagoryListController.inProgress,
+                    replacement: CenteredCircularProgressIndicator(),
+                    child: HorizontalCatagoryListView(catagoryList: catagoryListController.catagoryList,));
+              }
+          ),
+        ),
+      ],
+    );
   }
 
 
@@ -118,16 +164,3 @@ Widget _buildCatagoriesSection() {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
