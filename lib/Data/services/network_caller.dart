@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
@@ -14,9 +15,9 @@ class NetworkCaller {
   Future<NetworkResponse> getRequest({required String url, String? token}) async {
     try {
       Uri uri = Uri.parse(url);
-      _requestLog(url,{},{},'');
+      _requestLog(url,{},{},AuthController.accessToken??'');
       final Response  response = await get(uri, headers: {
-        'token': '$token',
+        'token': '${token ?? AuthController.accessToken}',
       });
 
       if (response.statusCode == 200) {

@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController{
-  String? accessToken;
+ static String? accessToken;
   final String _accessTokenKey = 'access-token';
 
 
@@ -20,7 +20,7 @@ class AuthController{
   }
 
 
-  Future<bool> isLoggedInUser() async  {
+  bool isLoggedInUser()  {
 
     return accessToken !=  null;
 

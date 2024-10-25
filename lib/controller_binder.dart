@@ -1,4 +1,5 @@
 import 'package:crafty_bay/Data/services/network_caller.dart';
+import 'package:crafty_bay/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/catagory_list_controller.dart';
@@ -29,6 +30,7 @@ class ControllerBinder extends Bindings {
     Get.put(ProductListByCatagoryController());
     Get.put(ProductdetailsByIdController());
     Get.put(AuthController());
+    Get.put(AddToCartController());
     Get.lazyPut(()=>EmailVerificationController());
     Get.lazyPut(()=>OtpVerificationController());
     Get.lazyPut(()=>ReadProfileController());
