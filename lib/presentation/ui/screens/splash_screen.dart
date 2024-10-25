@@ -1,4 +1,5 @@
 
+import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _movedToNextScreen() async{
 
-    await Future.delayed( Duration(seconds: 3));
+    await Future.delayed( Duration(seconds: 2));
+    await Get.find<AuthController>().getAccessToken();
     Get.off(() => MainBottomNavScreen());
 
   }

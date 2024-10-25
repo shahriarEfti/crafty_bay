@@ -20,55 +20,45 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
-
-  final BottomNavBarController _navBarController = Get.find <
-      BottomNavBarController>();
+  final BottomNavBarController _navBarController = Get.find<BottomNavBarController>();
 
   final List<Widget> _screens = [
     const HomeScreen(),
     const CatagoryListScreen(),
     const CartScreen(),
     const WishListScreen(),
-
-
   ];
 
   @override
   void initState() {
-
     super.initState();
-    Get.find<SliderListController>().getSliderList();
-    Get.find<CatagoryListController>().getCatagoryList();
-    Get.find<NewProductListController>().getNewProductList();
-    Get.find<PopularProductListController>().getPopularProductList();
-    Get.find<SpecialProductListController>().getSpecialProductList();
-  }
-    @override
-    Widget build(BuildContext context) {
-      return GetBuilder<BottomNavBarController>(
-          builder: (_) {
-            return Scaffold(
-              body: _screens
-              [_navBarController.selectedIndex]
-
-              ,
-              bottomNavigationBar: NavigationBar(
-                selectedIndex: _navBarController.selectedIndex,
-                onDestinationSelected: _navBarController.changedIndex,
-                destinations: [
-                  const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-                  const NavigationDestination(
-                      icon: Icon(Icons.category_outlined), label: 'Catagory'),
-                  const NavigationDestination(
-                      icon: Icon(Icons.shopping_cart), label: 'Cart'),
-                  const NavigationDestination(
-                      icon: Icon(Icons.favorite), label: 'WishList'),
-                ],
-              ),
-
-            );
-          }
-      );
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<SliderListController>().getSliderList();
+      Get.find<CatagoryListController>().getCatagoryList();
+      Get.find<NewProductListController>().getNewProductList();
+      Get.find<PopularProductListController>().getPopularProductList();
+      Get.find<SpecialProductListController>().getSpecialProductList();
+    });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<BottomNavBarController>(
+      builder: (_) {
+        return Scaffold(
+          body: _screens[_navBarController.selectedIndex],
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: _navBarController.selectedIndex,
+            onDestinationSelected: _navBarController.changedIndex,
+            destinations: [
+              const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+              const NavigationDestination(icon: Icon(Icons.category_outlined), label: 'Catagory'),
+              const NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+              const NavigationDestination(icon: Icon(Icons.favorite), label: 'WishList'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

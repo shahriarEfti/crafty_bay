@@ -1,5 +1,6 @@
 import 'package:crafty_bay/Data/models/product_model.dart';
 import 'package:crafty_bay/presentation/ui/screens/product_details_screen.dart';
+import 'package:crafty_bay/presentation/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,12 +17,12 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>const ProductDetailsScreen());
+        Get.to(()=> ProductDetailsScreen(productId: product.id!,));
       },
       child: Card(
         elevation: 3,
         child: SizedBox(
-          height: 160,
+         width: 160,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -33,7 +34,7 @@ class ProductCard extends StatelessWidget {
                     color: AppColor.themecolor.withOpacity(0.2),
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8)
                     ),
-                    image: const DecorationImage(image: AssetImage(AssetsPath.dummyproductimg,),
+                    image:  DecorationImage(image:NetworkImage(product.image ?? ''),
                         fit: BoxFit.scaleDown
                     )
 
@@ -76,15 +77,25 @@ class ProductCard extends StatelessWidget {
                         Card(
                           color: AppColor.themecolor,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4)
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                          child: const Padding(
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(()=>WishListScreen());
 
-                            padding: EdgeInsets.all(4.0),
-
-                            child: Icon(Icons.favorite_border_outlined,size: 16,color: Colors.white,),
+                              },
+                              child: const Icon(
+                                Icons.favorite_border_outlined,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         )
+
+
                       ],
                     ),
                   ],

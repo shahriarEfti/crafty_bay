@@ -16,7 +16,7 @@ class CatagoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){
 
-        Get.to(()=> ProductListScreen(CatagoryName: catagoryModel.categoryName ?? ''));
+        Get.to(()=> ProductListScreen(catagory: catagoryModel));
       },
       child: Column(
         children: [
@@ -28,7 +28,7 @@ class CatagoryCard extends StatelessWidget {
 
             ),
 
-            child: const Icon(Icons.computer,size: 48,color: AppColor.themecolor,),
+            child: Image.network(catagoryModel.categoryImg ??'',width: 48, height: 48, ),
           ),
           const SizedBox(height: 4,),
            Text(catagoryModel.categoryName ?? '',style: TextStyle(

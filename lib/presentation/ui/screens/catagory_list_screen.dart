@@ -17,6 +17,7 @@ class CatagoryListScreen extends StatelessWidget {
 
       },
       child: Scaffold(
+
         appBar: AppBar(
             title: Text('Catagories'),
 
@@ -30,7 +31,7 @@ class CatagoryListScreen extends StatelessWidget {
                 Icons.arrow_back_ios_outlined),)
         ),
         body: GridView.builder(
-            itemCount: 20,
+            itemCount: Get.find<CatagoryListController>().catagoryList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,childAspectRatio: 0.75
             ),

@@ -37,9 +37,10 @@ class _ColorPickerState extends State<ColorPicker> {
                   });
                 },
                 child: CircleAvatar(
+
                   backgroundColor: item,
                   radius: 16,
-                  child: _selectedColor == item ? const Icon(Icons.check,color: Colors.white,): null,
+                  child: _selectedColor == item ? const Icon(Icons.check,color: Colors.black54,): null,
 
                 ),
               );
