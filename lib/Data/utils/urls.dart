@@ -8,6 +8,10 @@ class Urls{
   static String readProfileUrl ='$_baseUrl/ReadProfile';
   static String addToCartUrl ='$_baseUrl/CreateCartList';
   static String createProfileUrl = '$_baseUrl/CreateProfile';
+  static  String getCartUrl = '$_baseUrl/CartList';
+  static  String deleteCartUrl = '$_baseUrl/DeleteCartList';
+  static  String createInvoice = '$_baseUrl/InvoiceCreate';
+
 
   static String productListByRemark(String remark) =>'$_baseUrl/ListProductByRemark/$remark';
   static String productListByCatagory(int catagoryId) =>'$_baseUrl/ListProductByCategory/$catagoryId';
@@ -16,3 +20,4 @@ class Urls{
   static String verifyotp(String  email,String otp) =>'$_baseUrl/VerifyLogin/$email/$otp';
 
 }
+

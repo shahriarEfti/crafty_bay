@@ -3,25 +3,22 @@ import '../../Data/models/network_response.dart';
 import '../../Data/services/network_caller.dart';
 import '../../Data/utils/urls.dart';
 
-class AddToCartController extends GetxController {
+class DeleteCartController extends GetxController {
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> addToCart(int productId, String color, String size, int quality) async {
+  Future<bool> deleteCartItem(int cartItemId) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
-      url: Urls.addToCartUrl,
+      url: Urls.deleteCartUrl,
       body: {
-        'product_id': productId,
-        'color': color,
-        'size': size,
-        'qty': quality,
+        'cart_item_id': cartItemId,
       },
     );
 

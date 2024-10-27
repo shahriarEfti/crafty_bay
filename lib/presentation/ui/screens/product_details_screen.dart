@@ -1,6 +1,7 @@
 import 'package:crafty_bay/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:crafty_bay/presentation/ui/screens/email_verification_screen.dart';
 import 'package:crafty_bay/presentation/ui/screens/review_screen.dart';
+import 'package:crafty_bay/presentation/ui/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay/presentation/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:crafty_bay/presentation/ui/widgets/product_image_banner_slider.dart';
@@ -25,9 +26,10 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  String _selectedColor ='';
-  String _selectedSize ='';
-  int quantity =1;
+  String _selectedColor = '';
+  String _selectedSize = '';
+  int quantity = 1;
+
   @override
   void initState() {
     super.initState();
@@ -58,8 +60,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           return Column(
             children: [
               Expanded(
-                child: _buildProductDetails(
-                  product),
+                child: _buildProductDetails(product),
               ),
               _buildPriceAndAddToCartSection(product),
             ],
@@ -70,8 +71,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Widget _buildProductDetails(ProductDetailsModel product) {
-
-    List<String> sizes =product.size?.split(',') ?? [];
+    List<String> sizes = product.size?.split(',') ?? [];
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -81,7 +81,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               product.img2!,
               product.img3!,
               product.img4!,
-
             ],
           ),
           Padding(
@@ -113,19 +112,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(height: 8),
                 ColorPicker(
-                  colors: _parseColorOptions(product.color), // Dynamically parsed colors from product.color
+                  colors: _parseColorOptions(product.color),
                   onColorSelected: (color) {
                     setState(() {
-                      _selectedColor = color.toString(); // Convert color to string if needed
+                      _selectedColor = color.toString();
                     });
                   },
                 ),
-
                 const SizedBox(height: 16),
                 SizePicker(
                   sizes: sizes,
                   onSizeSelected: (String selectedSize) {
-                    _selectedSize =selectedSize;
+                    _selectedSize = selectedSize;
                   },
                 ),
                 const SizedBox(height: 16),
@@ -143,12 +141,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Description' ,
-          style:   Theme.of(context).textTheme.titleMedium),
-
-
+          'Description',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 8),
-
         Text(
           productDetails.product?.shortDes ?? '',
           style: const TextStyle(color: Colors.black54),
@@ -174,10 +170,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           decimalPlaces: 0,
           color: AppColor.themecolor,
           onChanged: (value) {
-           quantity = value.toInt();
-            setState(() {
-
-            });
+            quantity = value.toInt();
+            setState(() {});
           },
         ),
       ],
@@ -190,7 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       children: [
         const Icon(Icons.star, color: Colors.amber),
         Text(
-        '  ${productDetails.product?.star ?? ''}',
+          '  ${productDetails.product?.star ?? ''}',
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.black54,
@@ -205,7 +199,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             'Reviews',
             style: TextStyle(
               fontWeight: FontWeight.w500,
-              color: AppColor.themecolor, // Use your defined theme color here
+              color: AppColor.themecolor,
             ),
           ),
         ),
@@ -226,7 +220,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-           Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Price"),
@@ -255,13 +249,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                 );
-              }
+              },
             ),
           ),
         ],
       ),
     );
   }
+
   // Helper method to parse color options from the product's color string
   List<Color> _parseColorOptions(String? colorString) {
     if (colorString == null || colorString.isEmpty) {
@@ -292,36 +287,40 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Future<void> _onTapAddToCart() async {
-
-   bool isLoggedInUser = await Get.find<AuthController>().isLoggedInUser();
-    if(isLoggedInUser){
-     AuthController.accessToken;
-   final result = await Get.find<AddToCartController>().addToCart(
-        widget.productId,
-        _selectedColor,
-        _selectedSize,
-        quantity);
-   if(result){
-     if (mounted) {
-       showSnackBarMessage(
-           context,
-           'Verification failed');
-
-           }
-   }else{
-           if (mounted) {
-           showSnackBarMessage(
-           context,
-               Get.find<AddToCartController>().errorMessage!, true);
-
-           }
-   }
-
-    }else {
-
-      Get.to(()=>const EmailVerificationScreen());
+    bool isLoggedInUser = await Get.find<AuthController>().isLoggedInUser();
+    if (isLoggedInUser) {
+      bool isProfileComplete = await Get.find<AuthController>().isProfileComplete();
+      if (isProfileComplete) {
+        // Proceed with adding to cart
+        final result = await Get.find<AddToCartController>().addToCart(
+          widget.productId,
+          _selectedColor,
+          _selectedSize,
+          quantity,
+        );
+        if (result) {
+          if (mounted) {
+            showSnackBarMessage(
+              context,
+              'Added to cart successfully',
+            );
+          }
+        } else {
+          if (mounted) {
+            showSnackBarMessage(
+              context,
+              Get.find<AddToCartController>().errorMessage!,
+              true,
+            );
+          }
+        }
+      } else {
+        // Navigate to the complete profile screen if the profile is not complete
+        Get.to(() => const CompleteProfileScreen());
+      }
+    } else {
+      // Navigate to the email verification screen if the user is not verified
+      Get.to(() => const EmailVerificationScreen());
     }
-
   }
-
 }

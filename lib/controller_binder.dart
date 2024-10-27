@@ -7,6 +7,7 @@ import 'package:crafty_bay/presentation/state_holders/complete_profile_controlle
 import 'package:crafty_bay/presentation/state_holders/email_verification_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/new_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/otp_verification_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/payment_method_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/popular_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_details_by_id_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/product_list_by_catagory_controller.dart';
@@ -19,20 +20,20 @@ import 'package:logger/logger.dart';
 class ControllerBinder extends Bindings {
   @override
   void dependencies() {
-    // Initialize the Logger first
+
     final logger = Logger();
     Get.put(logger);
 
-    // Initialize AuthController before NetworkCaller
+
     Get.put(AuthController());
 
-    // Initialize NetworkCaller with dependencies
+
     Get.put(NetworkCaller(
       logger: logger,
       authController: Get.find<AuthController>(),
     ));
 
-    // Initialize other controllers
+
     Get.put(BottomNavBarController());
     Get.put(SliderListController());
     Get.put(CatagoryListController());
@@ -46,5 +47,6 @@ class ControllerBinder extends Bindings {
     Get.put(OtpVerificationController());
     Get.put(ReadProfileController());
     Get.put(CompleteProfileController());
+    Get.put(PaymentMethodListController());
   }
 }
