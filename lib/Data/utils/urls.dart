@@ -7,6 +7,7 @@ class Urls{
   static String catagoryListUrl ='$_baseUrl/CategoryList';
   static String readProfileUrl ='$_baseUrl/ReadProfile';
   static String addToCartUrl ='$_baseUrl/CreateCartList';
+  static String createProfileUrl = '$_baseUrl/CreateProfile';
 
   static String productListByRemark(String remark) =>'$_baseUrl/ListProductByRemark/$remark';
   static String productListByCatagory(int catagoryId) =>'$_baseUrl/ListProductByCategory/$catagoryId';

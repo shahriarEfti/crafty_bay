@@ -3,6 +3,7 @@ import 'package:crafty_bay/presentation/state_holders/add_to_cart_controller.dar
 import 'package:crafty_bay/presentation/state_holders/auth_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/bottom_nav_bar_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/catagory_list_controller.dart';
+import 'package:crafty_bay/presentation/state_holders/complete_profile_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/email_verification_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/new_product_list_controller.dart';
 import 'package:crafty_bay/presentation/state_holders/otp_verification_controller.dart';
@@ -18,10 +19,21 @@ import 'package:logger/logger.dart';
 class ControllerBinder extends Bindings {
   @override
   void dependencies() {
-    Get.put(BottomNavBarController());
-    Get.put(Logger());
-    Get.put(NetworkCaller(logger: Get.find<Logger>()));
+    // Initialize the Logger first
+    final logger = Logger();
+    Get.put(logger);
 
+    // Initialize AuthController before NetworkCaller
+    Get.put(AuthController());
+
+    // Initialize NetworkCaller with dependencies
+    Get.put(NetworkCaller(
+      logger: logger,
+      authController: Get.find<AuthController>(),
+    ));
+
+    // Initialize other controllers
+    Get.put(BottomNavBarController());
     Get.put(SliderListController());
     Get.put(CatagoryListController());
     Get.put(NewProductListController());
@@ -29,14 +41,10 @@ class ControllerBinder extends Bindings {
     Get.put(SpecialProductListController());
     Get.put(ProductListByCatagoryController());
     Get.put(ProductdetailsByIdController());
-    Get.put(AuthController());
     Get.put(AddToCartController());
-    Get.lazyPut(()=>EmailVerificationController());
-    Get.lazyPut(()=>OtpVerificationController());
-    Get.lazyPut(()=>ReadProfileController());
-
+    Get.put(EmailVerificationController());
+    Get.put(OtpVerificationController());
+    Get.put(ReadProfileController());
+    Get.put(CompleteProfileController());
   }
-  }
-
-
-
+}
